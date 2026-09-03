@@ -1,0 +1,1 @@
+let price=24521.30;setInterval(()=>{price+=(Math.random()-0.5)*5;document.getElementById('nifty').innerText=price.toFixed(2);},1200);
