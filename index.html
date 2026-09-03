@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PA1 BUDDY v3.0 FULL</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
+.card h3{font-size:13px; letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="terminal">
+<header>
+<h1>PA1 BUDDY v3.0</h1>
+<div style="display:flex;gap:8px;align-items:center">
+<input id="searchInput" type="text" placeholder="NIFTY, RELIANCE..." style="padding:8px 12px;border-radius:20px;border:1px solid #00ff88;background:#111;color:#fff;width:180px">
+<button id="searchBtn" style="padding:8px 14px;border-radius:20px;border:none;background:#00ff88;color:#000;font-weight:bold;cursor:pointer">🔍</button>
+<span class="live">● LIVE</span>
+</div>
+</header>
+
+<div class="grid">
+<!-- 1 NIFTY -->
+<div class="card highlight">
+<h3>🔴 NIFTY LIVE + TELUGU HINT</h3>
+<h2 id="nifty" style="font-size:32px">Market Closed</h2>
+<small id="nifty-change">Repu 9:15 ki REAL</small>
+<div id="trade-hint" style="margin-top:12px;padding:10px;border-radius:8px;font-weight:bold;text-align:center;">MARKET CLOSED</div>
+<div id="hint-telugu" style="margin-top:10px;padding:10px;border:1px dashed #00ff88;border-radius:8px;font-size:12px;line-height:1.6">Repu 9:15 ki Telugu lo BUY/SELL hint vastundi</div>
+</div>
+
+<!-- 2 BANKNIFTY -->
+<div class="card">
+<h3>🏦 BANKNIFTY</h3>
+<h2 id="banknifty">Loading...</h2>
+<small id="banknifty-change">Repu LIVE</small>
+<div id="bank-hint" style="margin-top:8px;font-size:12px">Repu hint</div>
+</div>
+
+<!-- 3 SENSEX -->
+<div class="card">
+<h3>📈 SENSEX</h3>
+<h2 id="sensex">Loading...</h2>
+<small id="sensex-change">Repu LIVE</small>
+</div>
+
+<!-- 4 PCR + OI -->
+<div class="card">
+<h3>📊 PCR + OI DATA</h3>
+<p id="pcr-data" style="font-size:12px;line-height:1.8">
+PCR: 1.18 (Bullish)<br>
+OI Change: CE -2L, PE +3L<br>
+Max Pain: 24,500<br>
+<br><b>Telugu:</b><br>
+PCR ekkuva unte bulls strong bro!
+</p>
+</div>
+
+<!-- 5 S/R LEVELS -->
+<div class="card">
+<h3>🎯 SUPPORT / RESISTANCE</h3>
+<p style="font-size:12px;line-height:1.8">
+Support 1: 24,400<br>
+Support 2: 24,250<br>
+Resistance 1: 24,650<br>
+Resistance 2: 24,800<br>
+<br>
+<b>Logic:</b><br>
++50 = BUY CE<br>
+-50 = BUY PE
+</p>
+</div>
+
+<!-- 6 TOP STOCKS + SEARCH RESULT -->
+<div class="card">
+<h3>🔍 SEARCH + TOP STOCKS</h3>
+<div id="searchResult" style="padding:8px;background:rgba(0,255,136,0.08);border-radius:6px;font-size:12px;margin-bottom:8px">Search chey bro - RELIANCE, TCS</div>
+<p style="font-size:11px;line-height:1.6">
+RELIANCE: ₹2,850<br>
+TCS: ₹3,900<br>
+INFY: ₹1,650<br>
+HDFC: ₹1,720<br>
+<i>Repu REAL prices vastayi</i>
+</p>
+</div>
+
+</div>
+<footer style="text-align:center;margin-top:20px;opacity:0.3;font-size:10px">PA1 BUDDY v3.0 | Repu 9:15 AM REAL LIVE | pa-1trade.vercel.app</footer>
+</div>
+<script src="script.js"></script>
+</body>
+</html>
