@@ -2,91 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PA1 BUDDY v3.0 FULL</title>
+<title>PA1 BUDDY v4.0 - Option Chain + Gamma Blast</title>
 <link rel="stylesheet" href="style.css">
 <style>
-.grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr));}
-.card h3{font-size:13px; letter-spacing:1px}
+.option-table{width:100%;border-collapse:collapse;font-size:11px}
+.option-table th{background:rgba(0,255,136,0.2);padding:6px;color:#00ff88}
+.option-table td{padding:5px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:center}
+.call{color:#00ff88} .put{color:#ff5555}
+.gamma-high{background:rgba(255,0,0,0.15); animation:blink 1s infinite}
+@keyframes blink{50%{background:rgba(255,255,136,0.2)}}
+.zero-card{border:1px solid #ffaa00 !important; background:rgba(255,170,0,0.08) !important}
 </style>
 </head>
 <body>
 <div class="terminal">
 <header>
-<h1>PA1 BUDDY v3.0</h1>
+<h1>PA1 v4.0 OPTION TERMINAL</h1>
 <div style="display:flex;gap:8px;align-items:center">
-<input id="searchInput" type="text" placeholder="NIFTY, RELIANCE..." style="padding:8px 12px;border-radius:20px;border:1px solid #00ff88;background:#111;color:#fff;width:180px">
-<button id="searchBtn" style="padding:8px 14px;border-radius:20px;border:none;background:#00ff88;color:#000;font-weight:bold;cursor:pointer">🔍</button>
-<span class="live">● LIVE</span>
+<input id="searchInput" placeholder="Strike: 24500" style="padding:8px 12px;border-radius:20px;border:1px solid #00ff88;background:#111;color:#fff;width:140px">
+<button id="searchBtn" style="padding:8px 14px;border-radius:20px;border:none;background:#00ff88;color:#000;font-weight:bold;cursor:pointer">Chain</button>
+<span class="live">● GAMMA LIVE</span>
 </div>
 </header>
 
-<div class="grid">
-<!-- 1 NIFTY -->
-<div class="card highlight">
-<h3>🔴 NIFTY LIVE + TELUGU HINT</h3>
-<h2 id="nifty" style="font-size:32px">Market Closed</h2>
-<small id="nifty-change">Repu 9:15 ki REAL</small>
-<div id="trade-hint" style="margin-top:12px;padding:10px;border-radius:8px;font-weight:bold;text-align:center;">MARKET CLOSED</div>
-<div id="hint-telugu" style="margin-top:10px;padding:10px;border:1px dashed #00ff88;border-radius:8px;font-size:12px;line-height:1.6">Repu 9:15 ki Telugu lo BUY/SELL hint vastundi</div>
+<div class="grid" style="grid-template-columns:1fr 1fr 1fr">
+<!-- NIFTY -->
+<div class="card highlight"><h3>🔴 NIFTY <span id="nifty-spot" style="float:right">Loading</span></h3><h2 id="nifty">Loading...</h2><small id="nifty-change"></small><div id="trade-hint" style="margin-top:8px;padding:8px;border-radius:6px;font-weight:bold;text-align:center">LOADING</div><div id="hint-telugu" style="margin-top:6px;font-size:11px"></div></div>
+<!-- SENSEX -->
+<div class="card"><h3>📈 SENSEX <span id="sensex-spot" style="float:right"></span></h3><h2 id="sensex">Loading...</h2><small id="sensex-change"></small><div id="sensex-hint" style="margin-top:8px;font-size:11px"></div></div>
+<!-- BANKNIFTY -->
+<div class="card"><h3>🏦 BANKNIFTY</h3><h2 id="banknifty">Loading...</h2><small id="banknifty-change"></small></div>
 </div>
 
-<!-- 2 BANKNIFTY -->
-<div class="card">
-<h3>🏦 BANKNIFTY</h3>
-<h2 id="banknifty">Loading...</h2>
-<small id="banknifty-change">Repu LIVE</small>
-<div id="bank-hint" style="margin-top:8px;font-size:12px">Repu hint</div>
+<div class="grid" style="grid-template-columns:2fr 1fr; margin-top:16px">
+<!-- OPTION CHAIN -->
+<div class="card"><h3>⛓️ NIFTY OPTION CHAIN - CALL vs PUT LIVE</h3>
+<div style="display:flex;gap:10px;margin-bottom:8px;font-size:11px"><span class="call">● CALLS (CE)</span><span id="pcr-live" style="margin-left:auto;color:#00ff88">PCR: --</span><span class="put">● PUTS (PE)</span></div>
+<table class="option-table"><thead><tr><th>OI</th><th>CE LTP</th><th>CHG%</th><th>STRIKE</th><th>CHG%</th><th>PE LTP</th><th>OI</th></tr></thead><tbody id="option-chain-body"><tr><td colspan="7">Market closed - Repu 9:15 ki REAL option chain vastundi bro!</td></tr></tbody></table>
+<small style="opacity:0.5">Gamma Blast: Strike deggara OI ekkuva unte blast avuddi</small>
 </div>
 
-<!-- 3 SENSEX -->
-<div class="card">
-<h3>📈 SENSEX</h3>
-<h2 id="sensex">Loading...</h2>
-<small id="sensex-change">Repu LIVE</small>
+<!-- ZERO TO HERO + GAMMA BLAST -->
+<div>
+<div class="card zero-card"><h3>🚀 ZERO TO HERO - TODAY EXPIRY</h3>
+<p style="font-size:11px">Nifty & Sensex 0-10 Rs premium lo unna options</p>
+<div id="zero-hero" style="margin-top:10px;font-size:12px;line-height:1.8">Repu 9:15 ki live:<br>• Nifty 24500 CE: ₹8.5 -> ₹45 Target<br>• Nifty 24400 PE: ₹12 -> ₹60 Target<br>• Sensex 79000 CE: ₹5 -> ₹35<br><br><small>Risk: ₹5000, Reward: ₹30000<br>SL: 0 ayipothe exit!</small></div>
+<div id="gamma-blast" style="margin-top:10px;padding:8px;background:rgba(255,0,0,0.1);border-radius:6px;border:1px solid #ff4444">
+<h4 style="color:#ff4444">💥 GAMMA BLAST ALERT</h4>
+<p id="gamma-text" style="font-size:11px;margin-top:5px">Repu market open ayithe Gamma level check chesi alert istundi.<br><br>Gamma > 0.08 unte BLAST avuddi!<br>Strike: 24500 deggara OI 1Cr+ unte breakout!</p>
+</div>
 </div>
 
-<!-- 4 PCR + OI -->
-<div class="card">
-<h3>📊 PCR + OI DATA</h3>
-<p id="pcr-data" style="font-size:12px;line-height:1.8">
-PCR: 1.18 (Bullish)<br>
-OI Change: CE -2L, PE +3L<br>
-Max Pain: 24,500<br>
-<br><b>Telugu:</b><br>
-PCR ekkuva unte bulls strong bro!
-</p>
+<div class="card" style="margin-top:12px"><h3>🔍 SEARCH STRIKE</h3><div id="searchResult" style="font-size:12px">Strike search: 24500 type chey</div>
+<div style="margin-top:10px"><h4>📊 CALL vs PUT</h4><div style="display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:6px"><div id="call-bar" style="width:50%;background:#00ff88"></div><div id="put-bar" style="width:50%;background:#ff4444"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;margin-top:4px"><span id="call-pct" class="call">CALL 50%</span><span id="put-pct" class="put">PUT 50%</span></div></div>
+</div>
+</div>
 </div>
 
-<!-- 5 S/R LEVELS -->
-<div class="card">
-<h3>🎯 SUPPORT / RESISTANCE</h3>
-<p style="font-size:12px;line-height:1.8">
-Support 1: 24,400<br>
-Support 2: 24,250<br>
-Resistance 1: 24,650<br>
-Resistance 2: 24,800<br>
-<br>
-<b>Logic:</b><br>
-+50 = BUY CE<br>
--50 = BUY PE
-</p>
-</div>
-
-<!-- 6 TOP STOCKS + SEARCH RESULT -->
-<div class="card">
-<h3>🔍 SEARCH + TOP STOCKS</h3>
-<div id="searchResult" style="padding:8px;background:rgba(0,255,136,0.08);border-radius:6px;font-size:12px;margin-bottom:8px">Search chey bro - RELIANCE, TCS</div>
-<p style="font-size:11px;line-height:1.6">
-RELIANCE: ₹2,850<br>
-TCS: ₹3,900<br>
-INFY: ₹1,650<br>
-HDFC: ₹1,720<br>
-<i>Repu REAL prices vastayi</i>
-</p>
-</div>
-
-</div>
-<footer style="text-align:center;margin-top:20px;opacity:0.3;font-size:10px">PA1 BUDDY v3.0 | Repu 9:15 AM REAL LIVE | pa-1trade.vercel.app</footer>
+<footer style="text-align:center;margin-top:20px;opacity:0.3;font-size:10px">v4.0 Gamma Blast + Zero to Hero + Option Chain | Repu 9:15 REAL</footer>
 </div>
 <script src="script.js"></script>
 </body>

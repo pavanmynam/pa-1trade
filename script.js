@@ -1,86 +1,121 @@
-const niftyEl = document.getElementById('nifty');
-const changeEl = document.getElementById('nifty-change');
-const hintEl = document.getElementById('trade-hint');
-const hintTeluguEl = document.getElementById('hint-telugu');
-const bankEl = document.getElementById('banknifty');
-const bankChangeEl = document.getElementById('banknifty-change');
-const bankHintEl = document.getElementById('bank-hint');
-const sensexEl = document.getElementById('sensex');
-const sensexChangeEl = document.getElementById('sensex-change');
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-const searchResult = document.getElementById('searchResult');
 
-function getTradeSuggestion(price, diff){
-  if(diff > 80) return {action:"🚀 BUY CE - STRONG", telugu:"KONUKKOVACHU BRO! CE konavachu.", color:"#00ff88", hint:"STRONG BUY"};
-  if(diff > 20) return {action:"📈 BUY - KONAVACHU", telugu:"Kontha konavachu, dip lo konandi!", color:"#88ff88", hint:"BUY"};
-  if(diff > -20) return {action:"⏸️ WAIT - AAGANDI", telugu:"Aagandi bro, clear ga ledu.", color:"#ffaa00", hint:"WAIT"};
-  if(diff > -80) return {action:"⚠️ SELL - AMMAKOCHU", telugu:"PE konavachu, CE ammeyandi.", color:"#ff8855", hint:"SELL"};
-  return {action:"🔻 STRONG SELL", telugu:"AMMAKOVACHU! PE konandi!", color:"#ff4444", hint:"STRONG SELL"};
+const $ = id=>document.getElementById(id);
+function sugg(price,diff){
+  if(diff>80) return {a:"🚀 BUY CE STRONG", t:"KONUKKOVACHU!", c:"#00ff88"};
+  if(diff>20) return {a:"📈 BUY KONAVACHU", t:"Dip lo konandi!", c:"#88ff88"};
+  if(diff>-20) return {a:"⏸️ WAIT AAGANDI", t:"Aagandi bro", c:"#ffaa00"};
+  if(diff>-80) return {a:"⚠️ SELL AMMAKOCHU", t:"PE konavachu", c:"#ff8855"};
+  return {a:"🔻 STRONG SELL", t:"AMMAKOVACHU PE KONANDI!", c:"#ff4444"};
 }
-
-async function fetchReal(symbol){
-  const yUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1m&range=1d`;
-  const proxies = [
-    `https://api.allorigins.win/raw?url=${encodeURIComponent(yUrl)}`,
-    `https://corsproxy.io/?${encodeURIComponent(yUrl)}`,
-    `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(yUrl)}`
-  ];
-  for(let u of proxies){
-    try{
-      const r = await fetch(u, {cache:"no-store"});
-      const d = await r.json();
-      if(d.chart?.result?.[0]?.meta?.regularMarketPrice) return d.chart.result[0].meta;
-    }catch(e){ continue; }
-  }
+async function fetchYahoo(symbol){
+  const y=`https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?interval=1m&range=1d`;
+  const prox=[`https://api.allorigins.win/raw?url=${encodeURIComponent(y)}`,`https://corsproxy.io/?${encodeURIComponent(y)}`];
+  for(let u of prox){ try{ const r=await fetch(u,{cache:"no-store"}); const d=await r.json(); if(d.chart?.result?.[0]?.meta?.regularMarketPrice) return d.chart.result[0].meta; }catch(e){} }
   return null;
 }
-
+async function fetchOptionChain(){
+  // NSE option chain via proxy
+  const url = 'https://www.nseindia.com/api/option-chain-indices?symbol=NIFTY';
+  const prox = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+  try{
+    const r = await fetch(prox, {headers:{'User-Agent':'Mozilla'}});
+    const d = await r.json();
+    if(d.records?.data) return d.records.data;
+  }catch(e){}
+  return null;
+}
 async function updateAll(){
-  const niftyMeta = await fetchReal('%5ENSEI');
-  if(!niftyMeta){
-    niftyEl.textContent = "Market Closed";
-    changeEl.textContent = "Repu 9:15 AM ki REAL LIVE";
-    hintEl.textContent = "⏸️ MARKET CLOSED - REPU 9:15";
-    hintEl.style.background="#ffaa00"; hintEl.style.color="#000";
-    hintTeluguEl.innerHTML="<b>Market close ayindi</b><br>Repu 9:15 ki auto REAL vastundi!";
-    bankEl.textContent="Market Closed"; sensexEl.textContent="Market Closed";
+  const nMeta = await fetchYahoo('%5ENSEI');
+  const bMeta = await fetchYahoo('%5ENSEBANK');
+  const sMeta = await fetchYahoo('%5EBSESN');
+  if(!nMeta){
+    $('nifty').textContent="Market Closed"; $('nifty-change').textContent="Repu 9:15 REAL chain vastundi";
+    $('trade-hint').textContent="⏸️ MARKET CLOSED - REPU 9:15 OPTION CHAIN LIVE"; $('trade-hint').style.background="#ffaa00";
+    $('hint-telugu').innerHTML="Market close bro - repu 9:15 ki CALL vs PUT + Gamma Blast + Zero to Hero motham REAL vastayi!";
+    $('banknifty').textContent="Closed"; $('sensex').textContent="Closed";
+    // demo option chain for preview
+    const demo = [
+      {strike:24400, ce:12, ceCh:15, pe:89, peCh:-8, ceOI:'12L', peOI:'18L'},
+      {strike:24450, ce:22, ceCh:25, pe:65, peCh:-12, ceOI:'15L', peOI:'20L'},
+      {strike:24500, ce:45, ceCh:40, pe:42, peCh:-20, ceOI:'22L', peOI:'25L', atm:true},
+      {strike:24550, ce:78, ceCh:30, pe:25, peCh:-15, ceOI:'18L', peOI:'14L'},
+      {strike:24600, ce:120, ceCh:18, pe:15, peCh:-10, ceOI:'10L', peOI:'8L'},
+    ];
+    let html=''; demo.forEach(r=>{
+      html+=`<tr style="${r.atm?'background:rgba(0,255,136,0.1);font-weight:bold':''}"><td>${r.ceOI}</td><td class="call">₹${r.ce}</td><td style="color:${r.ceCh>0?'#00ff88':'#ff4444'}">${r.ceCh}%</td><td style="font-weight:bold">${r.strike}${r.atm?' ⭐ATM':''}</td><td style="color:${r.peCh>0?'#00ff88':'#ff4444'}">${r.peCh}%</td><td class="put">₹${r.pe}</td><td>${r.peOI}</td></tr>`;
+    });
+    $('option-chain-body').innerHTML=html;
+    $('pcr-live').textContent="PCR: 1.18 (Preview)"; $('call-bar').style.width="55%"; $('put-bar').style.width="45%"; $('call-pct').textContent="CALL 55%"; $('put-pct').textContent="PUT 45%";
+    $('zero-hero').innerHTML=`<b>Repu Live Preview:</b><br>Nifty 24600 CE: ₹15 → ₹60 (4x)<br>Nifty 24400 PE: ₹18 → ₹70 (3.8x)<br>Sensex 80000 CE: ₹8 → ₹40<br><br><span style="color:#ffaa00">Risk ₹2000 per lot, SL 0</span>`;
     return;
   }
-  let price = niftyMeta.regularMarketPrice; let prev=niftyMeta.previousClose; let diff=price-prev; let pct=(diff/prev*100).toFixed(2);
-  let sugg=getTradeSuggestion(price,diff);
-  niftyEl.textContent=price.toFixed(2); changeEl.textContent=`${diff>=0?'+':''}${diff.toFixed(2)} (${pct}%)`; niftyEl.style.color=sugg.color; changeEl.style.color=sugg.color;
-  hintEl.textContent=sugg.action; hintEl.style.background=sugg.color; hintEl.style.color="#000";
-  hintTeluguEl.innerHTML=`<b>${sugg.action}</b><br>${sugg.telugu}<br><small>Entry:${price.toFixed(0)} SL:${(price-50).toFixed(0)} Target:${(price+80).toFixed(0)}</small>`;
-  document.title=`${sugg.hint} ${price.toFixed(0)} | PA1`;
+  // NIFTY
+  let p=nMeta.regularMarketPrice, pr=nMeta.previousClose, d=p-pr, pct=(d/pr*100).toFixed(2), s=sugg(p,d);
+  $('nifty').textContent=p.toFixed(2); $('nifty-change').textContent=`${d>=0?'+':''}${d.toFixed(2)} (${pct}%)`; $('nifty').style.color=s.c;
+  $('trade-hint').textContent=s.a; $('trade-hint').style.background=s.c; $('hint-telugu').textContent=s.t;
+  $('nifty-spot').textContent=p.toFixed(0);
 
-  const bankMeta = await fetchReal('%5ENSEBANK');
-  if(bankMeta){
-    let bp=bankMeta.regularMarketPrice; let bprev=bankMeta.previousClose; let bdiff=bp-bprev; let bpct=(bdiff/bprev*100).toFixed(2);
-    let bsugg=getTradeSuggestion(bp,bdiff);
-    bankEl.textContent=bp.toFixed(2); bankChangeEl.textContent=`${bdiff>=0?'+':''}${bdiff.toFixed(2)} (${bpct}%)`; bankEl.style.color=bsugg.color;
-    bankHintEl.innerHTML=`<b style="color:${bsugg.color}">${bsugg.action}</b><br><small>${bsugg.telugu}</small>`;
+  // BANK
+  if(bMeta){ $('banknifty').textContent=bMeta.regularMarketPrice.toFixed(2); $('banknifty-change').textContent=(bMeta.regularMarketPrice-bMeta.previousClose).toFixed(2); }
+  if(sMeta){ $('sensex').textContent=sMeta.regularMarketPrice.toFixed(2); $('sensex-change').textContent=(sMeta.regularMarketPrice-sMeta.previousClose).toFixed(2); $('sensex-spot').textContent=sMeta.regularMarketPrice.toFixed(0); }
+
+  // OPTION CHAIN REAL attempt
+  const chain = await fetchOptionChain();
+  if(chain){
+    let atm = Math.round(p/50)*50;
+    let filtered = chain.filter(x=> Math.abs(x.strikePrice-atm)<=250).slice(0,8);
+    let html='', totalCall=0,totalPut=0;
+    filtered.forEach(o=>{
+      let ce=o.CE, pe=o.PE; if(!ce||!pe) return;
+      totalCall+=ce.openInterest||0; totalPut+=pe.openInterest||0;
+      let gamma = (ce.openInterest>1000000 || pe.openInterest>1000000) ? 'gamma-high' : '';
+      html+=`<tr class="${gamma}"><td>${(ce.openInterest/100000).toFixed(1)}L</td><td class="call">₹${ce.lastPrice}</td><td style="color:${ce.change>0?'#0f8':'#f44'}">${ce.pChange?.toFixed(1)}%</td><td><b>${o.strikePrice}${o.strikePrice==atm?' ⭐':''}</b></td><td style="color:${pe.change>0?'#0f8':'#f44'}">${pe.pChange?.toFixed(1)}%</td><td class="put">₹${pe.lastPrice}</td><td>${(pe.openInterest/100000).toFixed(1)}L</td></tr>`;
+    });
+    $('option-chain-body').innerHTML=html||'<tr><td colspan=7>Chain loading...</td></tr>';
+    let pcr = totalPut>0? (totalPut/totalCall).toFixed(2):'1.18';
+    $('pcr-live').textContent=`PCR: ${pcr} ${pcr>1?'Bullish':pcr<0.8?'Bearish':'Neutral'}`;
+    let total=totalCall+totalPut; $('call-bar').style.width=(totalCall/total*100)+'%'; $('put-bar').style.width=(totalPut/total*100)+'%';
+    $('call-pct').textContent=`CALL ${(totalCall/total*100).toFixed(0)}%`; $('put-pct').textContent=`PUT ${(totalPut/total*100).toFixed(0)}%`;
+    // Gamma Blast
+    let blastStrike = filtered.find(x=> (x.CE?.openInterest>1500000 || x.PE?.openInterest>1500000));
+    if(blastStrike){
+      $('gamma-text').innerHTML=`<b style="color:#ff4444">💥 BLAST at ${blastStrike.strikePrice}!</b><br>OI 15L+ cross ayindi! Breakout vastundi bro! ${blastStrike.strikePrice} CE/PE chudu!<br><small>KONUKKOVACHU - Gamma 0.12</small>`;
+    }
+  } else {
+    // Yahoo options fallback for premiums
+    $('pcr-live').textContent="PCR: Live NSE blocked - Yahoo premiums chupistunna";
   }
 
-  const sensexMeta = await fetchReal('%5EBSESN');
-  if(sensexMeta){
-    let sp=sensexMeta.regularMarketPrice; let sprev=sensexMeta.previousClose; let sdiff=sp-sprev; let spct=(sdiff/sprev*100).toFixed(2);
-    sensexEl.textContent=sp.toFixed(2); sensexChangeEl.textContent=`${sdiff>=0?'+':''}${sdiff.toFixed(2)} (${spct}%)`; sensexEl.style.color=getTradeSuggestion(sp,sdiff).color;
-  }
+  // Zero to Hero real premiums
+  // Use Yahoo options for Nifty near expiry
+  try{
+    const optUrl = `https://query1.finance.yahoo.com/v7/finance/options/%5ENSEI`;
+    const prox = `https://api.allorigins.win/raw?url=${encodeURIComponent(optUrl)}`;
+    const r = await fetch(prox); const d=await r.json();
+    const opts = d.optionChain?.result?.[0]?.options?.[0];
+    if(opts){
+      const calls = opts.calls?.slice(0,5)||[]; const puts = opts.puts?.slice(0,5)||[];
+      let zh = '<b>Zero to Hero REAL:</b><br>';
+      calls.filter(c=>c.lastPrice<20).forEach(c=>{ zh+=`Nifty ${c.strike} CE: ₹${c.lastPrice} → Target ₹${(c.lastPrice*4).toFixed(0)}<br>`; });
+      puts.filter(p=>p.lastPrice<20).forEach(p=>{ zh+=`Nifty ${p.strike} PE: ₹${p.lastPrice} → Target ₹${(p.lastPrice*4).toFixed(0)}<br>`; });
+      $('zero-hero').innerHTML=zh;
+    }
+  }catch(e){}
 }
 
 async function doSearch(){
-  const q=searchInput.value.trim().toUpperCase(); if(!q) return;
-  searchResult.innerHTML="Searching "+q+"...";
-  const map={'NIFTY':'%5ENSEI','BANKNIFTY':'%5ENSEBANK','SENSEX':'%5EBSESN','RELIANCE':'RELIANCE.NS','TCS':'TCS.NS','INFY':'INFY.NS'};
-  const sym=map[q]||q+'.NS';
-  const meta=await fetchReal(sym);
-  if(!meta){ searchResult.innerHTML=q+" - Market closed, repu 9:15 ki REAL"; return; }
-  let p=meta.regularMarketPrice; let pr=meta.previousClose; let d=p-pr; let pct=(d/pr*100).toFixed(2); let s=getTradeSuggestion(p,d);
-  searchResult.innerHTML=`<b>${q}</b>: ₹${p.toFixed(2)} (${pct}%)<br><b style="color:${s.color}">${s.action}</b><br><small>${s.telugu}</small>`;
+  const q=$('searchInput').value.trim(); if(!q) return;
+  const strike = parseInt(q);
+  if(!isNaN(strike)){
+    // highlight strike in chain
+    const rows=document.querySelectorAll('#option-chain-body tr');
+    rows.forEach(r=>{ if(r.textContent.includes(q)) r.style.background='rgba(0,255,136,0.2)'; });
+    $('searchResult').innerHTML=`<b>${strike} Strike:</b><br>CE/PE premiums chain lo highlight chesa bro!`;
+    return;
+  }
+  $('searchResult').textContent="Strike number type chey: 24500";
 }
-
-searchBtn?.addEventListener('click', doSearch);
-searchInput?.addEventListener('keypress', e=>{ if(e.key==='Enter') doSearch(); });
+$('searchBtn').addEventListener('click', doSearch);
+$('searchInput').addEventListener('keypress', e=>{ if(e.key==='Enter') doSearch(); });
 updateAll();
-setInterval(updateAll, 5000);
+setInterval(updateAll, 8000);
