@@ -1,118 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>PA1 BUDDY v5.0 MEGA - Old + New Combined</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>PA1 BUDDY v6.0 FINAL - PROPER FIT</title>
 <link rel="stylesheet" href="style.css">
-<style>
-.option-table{width:100%;border-collapse:collapse;font-size:11px}
-.option-table th{background:rgba(0,255,136,0.2);padding:6px;color:#00ff88}
-.option-table td{padding:5px;border-bottom:1px solid rgba(255,255,255,0.05);text-align:center}
-.call{color:#00ff88} .put{color:#ff5555}
-.gamma-high{background:rgba(255,0,0,0.15); animation:blink 1s infinite}
-@keyframes blink{50%{background:rgba(255,255,136,0.2)}}
-.zero-card{border:1px solid #ffaa00 !important; background:rgba(255,170,0,0.08) !important}
-.old-card{border:1px solid #00aaff !important; background:rgba(0,170,255,0.06) !important}
-</style>
 </head>
 <body>
 <div class="terminal">
 <header>
-<h1>PA1 BUDDY v5.0 MEGA - OLD + NEW</h1>
-<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-<input id="searchInput" type="text" placeholder="NIFTY, 24500, RELIANCE" style="padding:8px 12px;border-radius:20px;border:1px solid #00ff88;background:#111;color:#fff;width:200px">
-<button id="searchBtn" style="padding:8px 14px;border-radius:20px;border:none;background:#00ff88;color:#000;font-weight:bold;cursor:pointer">🔍 Search</button>
-<span class="live">● LIVE MEGA</span>
+<div class="header-left"><h1>PA1 BUDDY <span>v6.0 FINAL</span></h1><p class="subtitle">NSE LIVE • OLD+NEW MEGA • PROPER FIT</p></div>
+<div class="header-right">
+<div class="search-box"><input id="searchInput" type="text" placeholder="NIFTY / 24500 / RELIANCE"><button id="searchBtn">🔍</button></div>
+<div class="status"><span class="dot"></span><span id="market-status">Checking...</span><span class="live-badge">● LIVE</span></div>
 </div>
 </header>
 
-<!-- ROW 1: OLD CORE (v2.6) + NEW -->
-<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
-<!-- OLD 1: NIFTY with Telugu Hint (OLD CODE) -->
-<div class="card highlight">
-<h3>🔴 NIFTY LIVE + TELUGU HINT (OLD)</h3>
-<h2 id="nifty">Loading...</h2>
-<small id="nifty-change">Repu REAL</small>
-<div id="trade-hint" style="margin-top:12px;padding:10px;border-radius:8px;font-weight:bold;text-align:center;background:#ffaa00">LOADING</div>
-<div id="hint-telugu" style="margin-top:10px;padding:10px;border:1px dashed #00ff88;border-radius:8px;font-size:12px;line-height:1.6">Old Telugu BUY/SELL logic intact</div>
-<div style="margin-top:8px;font-size:10px;opacity:0.5">Entry: <span id="entry">--</span> | SL: <span id="sl">--</span> | Target: <span id="target">--</span></div>
-</div>
+<!-- TOP 3 INDICES - ALWAYS FIT -->
+<section class="top-row">
+<div class="card highlight nifty-card"><div class="card-head"><h3>🔴 NIFTY 50</h3><span id="nifty-spot" class="spot">--</span></div><h2 id="nifty" class="price">Loading...</h2><div id="nifty-change" class="change">Connecting...</div><div id="trade-hint" class="hint">LOADING</div><div id="hint-telugu" class="telugu">Old Telugu logic intact - Repu REAL</div><div class="sl-tp"><span>Entry: <b id="entry">--</b></span><span>SL: <b id="sl">--</b></span><span>Tgt: <b id="target">--</b></span></div></div>
+<div class="card"><div class="card-head"><h3>📈 SENSEX</h3><span id="sensex-spot" class="spot">--</span></div><h2 id="sensex" class="price">Loading...</h2><div id="sensex-change" class="change"></div><div id="sensex-hint" class="hint small"></div></div>
+<div class="card"><div class="card-head"><h3>🏦 BANKNIFTY</h3><span id="bank-spot" class="spot">--</span></div><h2 id="banknifty" class="price">Loading...</h2><div id="banknifty-change" class="change"></div><div id="bank-hint" class="hint small"></div></div>
+</section>
 
-<!-- OLD 2: BANKNIFTY (OLD) -->
-<div class="card old-card">
-<h3>🏦 BANKNIFTY (OLD CODE)</h3>
-<h2 id="banknifty">Loading...</h2>
-<small id="banknifty-change">Repu LIVE</small>
-<div id="bank-hint" style="margin-top:8px;font-size:12px"></div>
-<small style="opacity:0.4">Old BankNifty logic</small>
-</div>
+<!-- MIDDLE: OLD LOGIC -->
+<section class="mid-row">
+<div class="card old"><h3>📊 PCR + OI + MAX PAIN (OLD)</h3><div class="kv"><span>PCR:</span><b id="pcr-val">--</b></div><div class="kv"><span>CE OI:</span><b id="ce-oi">--</b></div><div class="kv"><span>PE OI:</span><b id="pe-oi">--</b></div><div class="kv"><span>Max Pain:</span><b id="max-pain">24,500</b></div><div class="telugu small" id="pcr-telugu">PCR >1.2 = Bulls strong</div></div>
+<div class="card old"><h3>🎯 SUPPORT / RESISTANCE (OLD)</h3><div class="sr"><div class="res"><span>R2</span><b id="res2">24,800</b></div><div class="res main"><span>R1</span><b id="res1">24,650</b></div><div class="spot-line"><span>SPOT</span><b id="sr-spot">--</b></div><div class="sup main"><span>S1</span><b id="sup1">24,400</b></div><div class="sup"><span>S2</span><b id="sup2">24,250</b></div></div><div id="sr-hint" class="hint small"></div></div>
+<div class="card old"><h3>🔍 TOP STOCKS + SEARCH (OLD)</h3><div id="searchResult" class="search-res">Search: RELIANCE / 24500</div><div class="stock-list"><div><span>RELIANCE</span><b id="rel-price">--</b></div><div><span>TCS</span><b id="tcs-price">--</b></div><div><span>INFY</span><b id="infy-price">--</b></div><div><span>HDFCBANK</span><b id="hdfc-price">--</b></div></div></div>
+</section>
 
-<!-- OLD 3: SENSEX (OLD) -->
-<div class="card old-card">
-<h3>📈 SENSEX (OLD)</h3>
-<h2 id="sensex">Loading...</h2>
-<small id="sensex-change"></small>
-<div id="sensex-hint" style="margin-top:8px;font-size:11px"></div>
-<small style="opacity:0.4">Old Sensex logic</small>
+<!-- BOTTOM: NEW OPTION CHAIN PROPER FIT -->
+<section class="bottom-row">
+<div class="card chain-card"><div class="card-head"><h3>⛓️ NIFTY OPTION CHAIN - CALL vs PUT LIVE (NEW)</h3><span id="pcr-live" class="pcr-badge">PCR: --</span></div>
+<div class="bar-row"><span class="call">CALL</span><div class="bar"><div id="call-bar" class="fill call-fill"></div><div id="put-bar" class="fill put-fill"></div></div><span class="put">PUT</span><span id="call-pct" class="pct call">50%</span><span id="put-pct" class="pct put">50%</span></div>
+<div class="table-wrap"><table class="opt-table"><thead><tr><th>OI</th><th>CE LTP</th><th>CHG</th><th>STRIKE</th><th>CHG</th><th>PE LTP</th><th>OI</th></tr></thead><tbody id="option-chain-body"><tr><td colspan="7" class="empty">Market closed - Repu 9:15 REAL chain LIVE ayipoddi. Proper fit layout ready!</td></tr></tbody></table></div>
 </div>
+<div class="side-col">
+<div class="card zero"><h3>🚀 ZERO TO HERO (NEW)</h3><div id="zero-hero" class="zero-body">Repu 9:15 ki Nifty+Sensex ₹5-20 premiums REAL LIVE vastayi. 4x target. Risk ₹2000.</div></div>
+<div class="card gamma"><h3>💥 GAMMA BLAST (NEW)</h3><div id="gamma-text" class="gamma-body">Gamma >0.08 = BLAST. OI 15L+ = Breakout. Repu 9:15 auto alert.</div></div>
+<div class="card sensex-opt"><h3>🎯 SENSEX OPTIONS (NEW)</h3><div id="sensex-option" class="sensex-body">Sensex 79k CE/PE premiums repu REAL</div></div>
 </div>
+</section>
 
-<!-- ROW 2: OLD SUPPORT/PCR + NEW -->
-<div class="grid" style="grid-template-columns:1fr 1fr 1fr; margin-top:14px">
-<div class="card old-card">
-<h3>📊 PCR + OI DATA (OLD)</h3>
-<p id="pcr-old" style="font-size:12px;line-height:1.8">
-PCR: <span id="pcr-val">--</span><br>
-OI Change: CE <span id="ce-oi">--</span>, PE <span id="pe-oi">--</span><br>
-Max Pain: <span id="max-pain">24,500</span><br>
-<br><b>Telugu:</b><br>
-<span id="pcr-telugu">PCR ekkuva unte bulls strong bro!</span>
-</p>
-</div>
-<div class="card old-card">
-<h3>🎯 SUPPORT / RESISTANCE (OLD)</h3>
-<p style="font-size:12px;line-height:1.8">
-Support 1: <span id="sup1">24,400</span><br>
-Support 2: <span id="sup2">24,250</span><br>
-Resistance 1: <span id="res1">24,650</span><br>
-Resistance 2: <span id="res2">24,800</span><br>
-<br>
-<b>Logic:</b><br>
-+50 = BUY CE<br>
--50 = BUY PE<br>
-<span id="sr-hint" style="color:#00ff88"></span>
-</p>
-</div>
-<div class="card old-card">
-<h3>🔍 TOP STOCKS (OLD) + SEARCH RESULT</h3>
-<div id="searchResult" style="padding:8px;background:rgba(0,255,136,0.08);border-radius:6px;font-size:12px;margin-bottom:8px">Search: RELIANCE, TCS, 24500 strike</div>
-<p style="font-size:11px;line-height:1.6">
-RELIANCE: <span id="rel-price">₹2,850</span><br>
-TCS: <span id="tcs-price">₹3,900</span><br>
-INFY: <span id="infy-price">₹1,650</span><br>
-HDFC: <span id="hdfc-price">₹1,720</span><br>
-<i>Repu REAL prices vastayi - Old logic intact</i>
-</p>
-</div>
-</div>
-
-<!-- ROW 3: NEW - OPTION CHAIN MEGA -->
-<div class="grid" style="grid-template-columns:2fr 1fr; margin-top:14px">
-<div class="card" style="border-color:#ff4444">
-<h3>⛓️ OPTION CHAIN - CALL vs PUT LIVE (NEW v4)</h3>
-<div style="display:flex;gap:10px;margin-bottom:8px;font-size:11px"><span class="call">● CALLS (CE)</span><span id="pcr-live" style="margin-left:auto;color:#00ff88">PCR: --</span><span class="put">● PUTS (PE)</span></div>
-<table class="option-table"><thead><tr><th>OI</th><th>CE LTP</th><th>CHG%</th><th>STRIKE</th><th>CHG%</th><th>PE LTP</th><th>OI</th></tr></thead><tbody id="option-chain-body"><tr><td colspan="7">Market closed - Repu 9:15 REAL chain vastundi!</td></tr></tbody></table>
-<div style="margin-top:10px"><h4>📊 CALL vs PUT OI BAR (NEW)</h4><div style="display:flex;height:12px;border-radius:6px;overflow:hidden;margin-top:6px"><div id="call-bar" style="width:50%;background:#00ff88"></div><div id="put-bar" style="width:50%;background:#ff4444"></div></div><div style="display:flex;justify-content:space-between;font-size:10px;margin-top:4px"><span id="call-pct" class="call">CALL 50%</span><span id="put-pct" class="put">PUT 50%</span></div></div>
-</div>
-<div>
-<div class="card zero-card"><h3>🚀 ZERO TO HERO - TODAY EXPIRY (NEW)</h3><p style="font-size:10px;opacity:0.6">Nifty & Sensex 0-20 Rs premium 4x target</p><div id="zero-hero" style="margin-top:10px;font-size:12px;line-height:1.8">Repu 9:15 ki live premiums...</div>
-<div id="gamma-blast" style="margin-top:10px;padding:10px;background:rgba(255,0,0,0.12);border-radius:8px;border:1px solid #ff4444"><h4 style="color:#ff4444">💥 GAMMA BLAST ALERT (NEW)</h4><p id="gamma-text" style="font-size:11px;margin-top:5px">Gamma >0.08 = BLAST avuddi! Strike deggara OI 15L+ unte breakout!</p></div>
-</div>
-<div class="card" style="margin-top:12px;border-color:#ffaa00"><h3>🎯 SENSEX OPTION PREMIUM (NEW)</h3><div id="sensex-option" style="font-size:12px;line-height:1.8">Sensex 79000 CE: ₹12<br>Sensex 79000 PE: ₹15<br><small>Repu REAL Sensex chain</small></div></div>
-</div>
-</div>
-
-<footer style="text-align:center;margin-top:20px;opacity:0.3;font-size:10px">PA1 v5.0 MEGA | OLD v2.6 (Nifty+Bank+S/R+PCR+TopStocks) + NEW v4 (Option Chain+Gamma+ZeroHero+Sensex) | Repu 9:15 REAL</footer>
+<footer>PA1 v6.0 FINAL • Old v2.6 + New v4 combined • Proper responsive fit • Repu 9:15 AM NSE open ki REAL LIVE - Miss avvadu! • pa-1trade.vercel.app</footer>
 </div>
 <script src="script.js"></script>
 </body>

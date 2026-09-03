@@ -1,4 +1,5 @@
-PA1 v5.0 MEGA - OLD+NEW Combined
-Old v2.6: Nifty Telugu hint, BankNifty, Sensex, PCR, S/R, Top Stocks, Search
-New v4: Option Chain CALL vs PUT, Gamma Blast, Zero to Hero Nifty+Sensex
-Upload 3 files to GitHub -> Commit -> Vercel LIVE -> Repu 9:15 REAL
+PA1 v6.0 FINAL PROPER FIT
+- Responsive layout, mobile+desktop perfect fit
+- Old (Nifty Telugu, Bank, Sensex, PCR, S/R, Stocks) + New (Option Chain, CALL vs PUT bar, Gamma Blast, Zero to Hero, Sensex Options) ALL combined
+- Market status auto, miss avvadu, repu 9:15 REAL LIVE
+Upload 3 files to GitHub -> Commit -> Vercel -> Live
