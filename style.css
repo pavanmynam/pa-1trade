@@ -1,1 +1,16 @@
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace}body{background:#0a0a0a;color:#e0e0e0}.terminal{max-width:1200px;margin:20px auto;padding:20px}header{display:flex;justify-content:space-between;border-bottom:2px solid #00ff88;padding-bottom:10px;margin-bottom:20px}header h1{color:#00ff88}.live{color:#00ff88;animation:blink 1s infinite}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}.card{background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:12px;padding:20px;backdrop-filter:blur(10px)}.card h3{color:#00ff88;margin-bottom:10px;font-size:14px}.card h2{font-size:28px;margin:10px 0}.journal{margin-top:20px;background:rgba(255,255,255,0.05);padding:20px;border-radius:12px;border:1px solid rgba(0,255,136,0.2)}table{width:100%;margin-top:10px;border-collapse:collapse}th,td{padding:10px;text-align:left;border-bottom:1px solid #222}@keyframes blink{50%{opacity:0}}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Courier New',monospace}
+body{background:#0a0a0a;color:#e0e0e0}
+.terminal{max-width:1200px;margin:20px auto;padding:20px}
+header{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #00ff88;padding-bottom:10px;margin-bottom:20px;flex-wrap:wrap}
+header h1{color:#00ff88;font-size:18px}
+.live{color:#00ff88;animation:blink 1s infinite;font-size:12px;background:rgba(0,255,136,0.1);padding:4px 10px;border-radius:20px;border:1px solid #00ff88}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:rgba(255,255,255,0.05);border:1px solid rgba(0,255,136,0.2);border-radius:12px;padding:20px;backdrop-filter:blur(10px);transition:0.3s}
+.card:hover{border-color:#00ff88;transform:translateY(-2px)}
+.card.highlight{border-color:#00ff88;background:rgba(0,255,136,0.08)}
+.card h3{color:#00ff88;margin-bottom:10px;font-size:13px;letter-spacing:1px}
+.card h2{font-size:28px;margin:10px 0}
+.journal{margin-top:20px;background:rgba(255,255,255,0.05);padding:20px;border-radius:12px;border:1px solid rgba(0,255,136,0.2)}
+table{width:100%;margin-top:10px;border-collapse:collapse}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #222}
+@keyframes blink{50%{opacity:0}}
