@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PA1 TRADE</title>
+<style>body{background:#000;color:#0f0;font-family:monospace;padding:10px;margin:0}.card{background:#111;padding:15px;border-radius:12px;margin-bottom:10px;border:1px solid #222;text-align:center}.big{font-size:24px;font-weight:bold}</style>
+</head><body>
+<h2 style="text-align:center">PA1 TRADE - LIVE</h2>
+<div class="card"><div class="big" id="nifty">Loading NIFTY...</div><div id="bank"></div><div id="sensex"></div></div>
+<div class="card" style="display:flex;gap:10px"><div style="flex:1">GOLD<br><b id="gold">...</b></div><div style="flex:1">DOW<br><b id="dow">...</b></div><div style="flex:1">BTC<br><b id="btc">...</b></div></div>
+<div class="card" id="hint">Loading hint...</div>
+
+<script>
+async function load(){
+  try{
+    const r = await fetch('/api/spot?t='+Date.now());
+    const d = await r.json();
+    document.getElementById('nifty').innerText = 'NIFTY '+d.nifty+' LIVE';
+    document.getElementById('bank').innerText = 'BANK '+d.bank;
+    document.getElementById('sensex').innerText = 'SENSEX '+d.sensex;
+    document.getElementById('gold').innerText = '$'+d.gold;
+    document.getElementById('dow').innerText = d.dow;
+    document.getElementById('btc').innerText = '$'+d.btcUsd;
+    document.getElementById('hint').innerText = 'ANNA I HINT: '+d.hint;
+  }catch(e){
+    document.getElementById('nifty').innerText = 'Error loading - Check api/spot.js';
+  }
+}
+load(); setInterval(load, 5000);
+</script>
+</body></html>
