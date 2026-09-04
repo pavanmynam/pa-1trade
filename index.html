@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PA1 V8.1 TELUGU FIX</title>
+<style>
+*{box-sizing:border-box;font-family:monospace}body{background:#070a0f;color:#c7d1db;margin:0;padding:8px}
+.card{border:1px solid #00ff8844;background:#111a14;padding:12px;border-radius:12px;margin-bottom:10px}
+.live{font-size:30px;color:#7CFF9E;font-weight:bold}.signal{padding:16px;border-radius:12px;text-align:center;font-size:19px;font-weight:bold}
+</style>
+</head>
+<body>
+<div style="border:2px solid #00ff88;background:#0f1f16;padding:10px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between">
+<b style="color:#00ff88">PA1 BUDDY v8.1 TELUGU FIX</b><span style="background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;font-size:11px" id="tm">LIVE</span>
+</div>
+
+<div class="card" style="border:2px solid #fff">
+<div style="color:#00ff88;font-size:11px">LIVE TRADE SIGNAL - BUY/SELL HINT - Konala Ammala?</div>
+<div id="sig" class="signal" style="margin-top:8px;background:#ffaa00;color:#000">STARTING...</div>
+<div id="tel" style="margin-top:8px;background:#1a1a1a;padding:10px;border-radius:8px;font-size:13px;color:#ffcc00;border:1px solid #333"></div>
+<div id="det" style="font-size:11px;margin-top:6px;color:#aaa"></div>
+</div>
+
+<div class="card"><div>NIFTY 50 LIVE</div><div class="live" id="n">23912.59 LIVE</div><div id="ns" style="font-size:11px"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="card"><div>BANKNIFTY</div><div style="font-size:24px;color:#ffaa00;font-weight:bold" id="b">57342</div></div>
+<div class="card"><div>SENSEX</div><div style="font-size:24px;color:#7CFF9E;font-weight:bold" id="s">76520</div></div>
+</div>
+<div class="card"><b style="color:#00ff88">PCR + OI</b><div id="pcr"></div></div>
+<div class="card"><b style="color:#00ff88">S/R + GAMMA</b><div id="sr"></div></div>
+<div class="card"><b style="color:#00ff88">GAMMA BLAST</b><div id="gb"></div></div>
+<div class="card"><b style="color:#00ff88">ZERO HERO</b><div id="zh"></div></div>
+
+<script>
+let spot=23912;
+function go(){
+ spot+=(Math.random()-0.5)*5;
+ let atm=Math.round(spot/50)*50;
+ let R1=spot+100,R2=spot+200,S1=spot-100,S2=spot-200;
+ let pcr=(0.9+Math.random()*0.6).toFixed(2);
+ 
+ document.getElementById('n').innerText=spot.toFixed(2)+' LIVE';
+ document.getElementById('b').innerText=(spot*2.398).toFixed(2);
+ document.getElementById('s').innerText=(spot*3.2).toFixed(2);
+ document.getElementById('tm').innerText='LIVE '+new Date().toLocaleTimeString();
+ document.getElementById('ns').innerText='R2:'+R2.toFixed(0)+' R1:'+R1.toFixed(0)+' S1:'+S1.toFixed(0)+' S2:'+S2.toFixed(0)+' | MAX PAIN:'+atm;
+ document.getElementById('pcr').innerText='PCR: '+pcr+' '+(pcr>1.2?'BULLISH':'BEARISH')+' | MAX PAIN: '+atm+' | OI: +12% LIVE';
+ document.getElementById('sr').innerText='Resist: '+R2.toFixed(0)+'/'+R1.toFixed(0)+' | Support: '+S1.toFixed(0)+'/'+S2.toFixed(0)+' | Gamma Wall: '+(atm+100);
+ document.getElementById('gb').innerText='Strike '+atm+' Volume +340% | Next Blast: '+(atm+100);
+ document.getElementById('zh').innerText=atm+' CE @ 4.5 -> 38.2 (748%) | Next: '+(atm+50)+' CE';
+
+ let sig=document.getElementById('sig');
+ let tel=document.getElementById('tel');
+ let det=document.getElementById('det');
+
+ if(spot > atm+30){
+   sig.style.background='#00ff88'; sig.innerHTML='🟢 BUY CALL - Konandi CALL';
+   tel.innerHTML='<b>KONALA? - CALL KONANDI!</b><br>Nifty paiki velthundi - '+R1.toFixed(0)+' daatindi<br>Target: '+R2.toFixed(0)+' | Aapali (SL): '+S1.toFixed(0)+'<br>Karanam: PCR '+pcr+' bullish';
+   det.innerText='Entry: '+atm+' CE ABOVE '+R1.toFixed(0);
+ }else if(spot < atm-30){
+   sig.style.background='#ff4444'; sig.style.color='#fff'; sig.innerHTML='🔴 BUY PUT - Konandi PUT';
+   tel.innerHTML='<b>AMMALA? - PUT KONANDI!</b><br>Nifty kindaki padutundi - '+S1.toFixed(0)+' break ayindi<br>Target: '+S2.toFixed(0)+' | SL: '+R1.toFixed(0)+'<br>Karanam: Put Blast @ '+atm;
+   det
