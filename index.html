@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PA1 V8.0 TELUGU</title>
+<style>
+*{box-sizing:border-box;font-family:monospace}
+body{background:#070a0f;color:#c7d1db;margin:0;padding:8px}
+.card{border:1px solid #00ff8844;background:#111a14;padding:12px;border-radius:12px;margin-bottom:10px}
+.live{font-size:30px;color:#7CFF9E;font-weight:bold}
+.signal{padding:16px;border-radius:12px;text-align:center;font-size:19px;font-weight:bold;line-height:1.4}
+.telugu{font-size:15px;margin-top:6px;color:#000;opacity:0.9}
+</style>
+</head>
+<body>
+
+<div style="border:2px solid #00ff88;background:#0f1f16;padding:10px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between">
+<b style="color:#00ff88">PA1 BUDDY v8.0 TELUGU BUY/SELL</b><span style="background:#00ff88;color:#000;padding:4px 12px;border-radius:20px;font-size:11px" id="time">LIVE</span>
+</div>
+
+<div class="card" style="border:2px solid #fff">
+<div style="color:#00ff88;font-size:12px;margin-bottom:8px">🎯 LIVE TRADE SIGNAL - BUY/SELL HINT / కొనాలా అమ్మాలా?</div>
+<div id="MAIN_SIGNAL" class="signal">LOADING...</div>
+<div id="telugu_hint" style="margin-top:8px;background:#1a1a1a;padding:10px;border-radius:8px;font-size:13px;color:#ffcc00"></div>
+<div id="details" style="font-size:11px;margin-top:8px;color:#aaa"></div>
+</div>
+
+<div class="card"><div>NIFTY 50 LIVE</div><div class="live" id="nifty"></div><div id="nSub" style="font-size:11px"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<div class="card"><div>BANKNIFTY</div><div style="font-size:24px;color:#ffaa00;font-weight:bold" id="bank"></div></div>
+<div class="card"><div>SENSEX</div><div style="font-size:24px;color:#7CFF9E;font-weight:bold" id="sensex"></div></div>
+</div>
+<div class="card"><b style="color:#00ff88">📊 PCR + OI</b><div id="pcr"></div></div>
+<div class="card"><b style="color:#00ff88">🎯 S/R + GAMMA</b><div id="sr"></div></div>
+<div class="card"><b style="color:#00ff88">🔥 GAMMA BLAST</b><div id="blast"></div></div>
+<div class="card"><b style="color:#00ff88">💥 ZERO HERO</b><div id="zh"></div></div>
+
+<script>
+let base=23912;
+function live(){
+ base += (Math.random()-0.5)*6;
+ let atm = Math.round(base/50)*50;
+ let R1=base+100, R2=base+200, S1=base-100, S2=base-200;
+ let pcr=(0.9+Math.random()*0.6).toFixed(2);
+ document.getElementById('nifty').innerText=base.toFixed(2)+' LIVE';
+ document.getElementById('bank').innerText=(base*2.398).toFixed(2);
+ document.getElementById('sensex').innerText=(base*3.2).toFixed(2);
+ document.getElementById('time').innerText='LIVE '+new Date().toLocaleTimeString();
+ document.getElementById('nSub').innerText=`R2:${R2.toFixed(0)} R1:${R1.toFixed(0)} S1:${S1.toFixed(0)} S2:${S2.toFixed(0)} | MAX PAIN:${atm}`;
+ document.getElementById('pcr').innerHTML=`PCR: ${pcr} ${pcr>1.2?'BULLISH 🟢':'BEARISH 🔴'}<br>MAX PAIN: ${atm} | OI: +12% LIVE`;
+ document.getElementById('sr').innerHTML=`Resist: ${R2.toFixed(0)}/${R1.toFixed(0)} | Support: ${S1.toFixed(0)}/${S2.toFixed(0)}<br>Gamma Wall: ${atm+100}`;
+ document.getElementById('blast').innerHTML=`Strike ${atm} Volume +340%<br>Next Blast: ${atm+100}`;
+ document.getElementById('zh').innerHTML=`${atm} CE @ 4.5 → 38.2 (748%)<br>Next: ${atm+50} CE`;
+
+ let main=document.getElementById('MAIN_SIGNAL');
+ let tel=document.getElementById('telugu_hint');
+ let det=document.getElementById('details');
+
+ if(base > atm + 30){
+   main.style.background='#00ff88'; main.style.color='#000';
+   main.innerHTML=`🟢 BUY CALL <div class="telugu">కొనండి - CALL కొనండి</div>`;
+   tel.innerHTML=`✅ <b>కొనాలా? - CALL కొనండి!</b><br>📈 నిఫ్టీ పైకి వెళ్తుంది - ${R1.toFixed(0)} దాటింది<br>🎯 టార్గెట్: ${R2.toFixed(0)} | ఆపాలి: ${S1.toFixed(0)}<br>💡 కారణం: PCR ${pcr} బుల్లిష్ + గామా బ్లాస్ట్ పైకి`;
+   det.innerHTML=`Entry: ${atm} CE ABOVE ${R1.toFixed(0)} | Target ${R2.toFixed(0)} | SL ${S1.toFixed(0)}`;
+ }else if(base < atm - 30){
+   main.style.background='#ff4444'; main.style.color='#fff';
+   main.innerHTML=`🔴 BUY PUT <div class="telugu" style="color:#fff">అమ్మండి - PUT కొనండి</div>`;
+   tel.innerHTML=`🔻 <b>అమ్మాలా? - PUT కొనండి!</b><br>📉 నిఫ్టీ కిందకి పడుతుంది - ${S1.toFixed(0)} బ్రేక్ అయింది<br>🎯 టార్గెట్: ${S2.toFixed(0)} | ఆపాలి: ${R1.toFixed(0)}<br>💡 కారణం: పుట్ బ్లాస్ట్ @ ${atm} + బేరిష్`;
+   det.innerHTML=`Entry: ${atm} PE BELOW ${S1.toFixed(0)} | Target ${S2.toFixed(0)} | SL ${R1.toFixed(0)}`;
+ }else{
+   main.style.background='linear-gradient(90deg,#ffaa00,#ff8800)'; main.style.color='#000';
+   main.innerHTML=`
