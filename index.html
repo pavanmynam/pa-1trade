@@ -1,0 +1,124 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PA1 TRADE - HERO ZERO BLAST</title>
+<style>
+body{background:#000;color:#fff;margin:0;font-family:system-ui;padding:8px}
+.top{background:linear-gradient(90deg,#0f0,#0a0);color:#000;padding:10px;text-align:center;font-weight:900;border-radius:12px;font-size:13px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.card{background:#111;border:1px solid #222;border-radius:14px;padding:12px;text-align:center}
+.big{font-size:22px;font-weight:900;color:#0f0} .price{font-size:16px;font-weight:800}
+.chain{background:#0d0d0d;border:1px solid #222;border-radius:14px;padding:10px;margin-top:10px}
+.strike{display:flex;justify-content:space-between;padding:6px 4px;border-bottom:1px solid #1a1a1a;font-size:13px}
+.atm{background:#0f0;color:#000;font-weight:900;border-radius:8px}
+.otm{background:#1a1a1a} .hero{background:linear-gradient(90deg,#ff0,#f80);color:#000;font-weight:900;border-radius:8px}
+.sig{padding:12px;border-radius:12px;font-weight:900;text-align:center;margin-top:8px;font-size:14px}
+.callBg{background:#0f0;color:#000} .putBg{background:#f00;color:#fff}
+.tag{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:900}
+.btn{width:100%;padding:14px;border:0;border-radius:12px;font-weight:900;margin-top:8px;font-size:15px}
+</style></head><body>
+<div class="top" id="topBar">PA1 HERO ZERO BLAST - LOADING...</div>
+
+<div class="grid2">
+<div class="card"><div>NIFTY 50</div><div class="big" id="nifty">--</div><small id="nT">--</small></div>
+<div class="card"><div>BANK NIFTY</div><div class="price" id="bank">--</div><div style="margin-top:4px">SENSEX <b id="sensex">--</b></div></div>
+</div>
+
+<div class="grid2">
+<div class="card">GOLD INTL<br><span class="price" id="gold">--</span><br><small>FUT <span id="gFut">--</span></small><br><span style="color:#FFD700">GOLD NATL ₹<span id="gInr">--</span>/10g</span></div>
+<div class="card">BTC LIVE<br><span class="price" id="btc">--</span><br><small style="color:#f7931a">₹ <span id="btcInr">--</span></small><br><small>DOW <span id="dow">--</span></small></div>
+</div>
+
+<div class="sig" id="hintBox">ANNA HINT Loading...</div>
+<div class="sig" id="sigBox">SIGNAL Loading...</div>
+
+<!-- NIFTY OPTIONS CHAIN -->
+<div class="chain">
+<div style="display:flex;justify-content:space-between;font-weight:900"><span>📈 NIFTY OPTIONS CHAIN - <span id="nSpot">--</span></span><span class="tag" style="background:#0f0;color:#000" id="nTag">ATM</span></div>
+<div id="niftyChain"></div>
+<div style="margin-top:8px;background:#111;padding:8px;border-radius:10px;font-size:12px">
+<b>🎯 HERO TO ZERO:</b> <span id="nHero"></span><br>
+<b>💥 GAMMA BLAST:</b> <span id="nGamma" style="color:#0f0"></span>
+</div>
+<button class="btn callBg" id="nBuyBtn">🟢 NIFTY CALL BUY</button>
+<button class="btn putBg" id="nSellBtn">🔴 NIFTY PUT BUY</button>
+</div>
+
+<!-- SENSEX OPTIONS CHAIN -->
+<div class="chain">
+<div style="display:flex;justify-content:space-between;font-weight:900"><span>📊 SENSEX OPTIONS - <span id="sSpot">--</span></span><span class="tag" style="background:#0ff;color:#000">BSE</span></div>
+<div id="sensexChain"></div>
+<div style="margin-top:8px;background:#111;padding:8px;border-radius:10px;font-size:12px">
+<b>🎯 HERO TO ZERO SENSEX:</b> <span id="sHero"></span><br>
+<b>💥 GAMMA BLAST:</b> <span id="sGamma" style="color:#0ff"></span>
+</div>
+</div>
+
+<!-- GOLD & BTC TELUGU -->
+<div class="chain">
+<div style="font-weight:900">🪙 GOLD & BITCOIN - TELUGU LO</div>
+<div id="goldBtcTelugu" style="font-size:13px;margin-top:6px;line-height:1.6"></div>
+</div>
+
+<script>
+function buildChain(spot, step, count, containerId){
+ let atm = Math.round(spot/step)*step;
+ let html = `<div class="strike" style="font-weight:900;color:#888"><span>CALL</span><span>STRIKE</span><span>PUT</span></div>`;
+ for(let i=-count;i<=count;i++){
+   let strike = atm + (i*step);
+   let diff = strike - spot;
+   let callPrice = Math.max(5, 120 - (diff*0.8) + (Math.random()*5));
+   let putPrice = Math.max(5, 120 + (diff*0.8) + (Math.random()*5));
+   let cls = i===0 ? 'atm' : (Math.abs(i)>=3 ? 'hero' : 'otm');
+   let label = i===0 ? 'ATM' : (i>0 ? 'OTM CALL' : 'OTM PUT');
+   if(Math.abs(i)>=3) label = 'HERO ZERO';
+   html += `<div class="strike ${cls}"><span>₹${callPrice.toFixed(0)} <small>${label}</small></span><span><b>${strike}</b></span><span><small>${label}</small> ₹${putPrice.toFixed(0)}</span></div>`;
+ }
+ document.getElementById(containerId).innerHTML = html;
+ return atm;
+}
+
+async function load(){
+ try{
+  let r=await fetch('/api/spot?t='+Date.now()); let d=await r.json();
+  document.getElementById('nifty').innerText=d.nifty+' LIVE';
+  document.getElementById('bank').innerText=d.bank;
+  document.getElementById('sensex').innerText=d.sensex;
+  document.getElementById('gold').innerText='$'+d.gold;
+  document.getElementById('gFut').innerText='$'+d.goldFuture;
+  document.getElementById('gInr').innerText=d.goldInr;
+  document.getElementById('btc').innerText='$'+d.btcUsd;
+  document.getElementById('btcInr').innerText=(d.btcInr/100000).toFixed(2)+' L';
+  document.getElementById('dow').innerText=d.dow;
+  document.getElementById('nT').innerText=new Date().toLocaleTimeString();
+  document.getElementById('nSpot').innerText=d.nifty;
+  document.getElementById('sSpot').innerText=d.sensex;
+  document.getElementById('topBar').innerText=`🇮🇳 NIFTY ${d.nifty} | BANK ${d.bank} | GOLD ₹${d.goldInr} | BTC ₹${(d.btcInr/100000).toFixed(1)}L | ${d.hint}`;
+  let isCall = d.signal.includes('CALL');
+  let hintEl=document.getElementById('hintBox'); hintEl.innerText='ANNA I HINT: '+d.hint; hintEl.className='sig '+(isCall?'callBg':'putBg');
+  let sigEl=document.getElementById('sigBox'); sigEl.innerText=`SIGNAL: ${d.signal} | ${d.hint} | BUY ${isCall?'CALL':'PUT'}`; sigEl.className='sig '+(isCall?'callBg':'putBg');
+  document.getElementById('nTag').innerText = isCall? 'CALL BIAS' : 'PUT BIAS';
+
+  // NIFTY CHAIN - 50 step
+  let nAtm = buildChain(parseFloat(d.nifty), 50, 4, 'niftyChain');
+  document.getElementById('nHero').innerText = `${nAtm+200} CE @ ₹15 | ${nAtm-200} PE @ ₹18 - Hero to Zero! 10x avvochu!`;
+  document.getElementById('nGamma').innerText = `${nAtm} ATM break ayithe ${nAtm+100} & ${nAtm-100} gamma blast!`;
+  document.getElementById('nBuyBtn').innerText = `🟢 BUY ${nAtm} CE - ${d.signal}`;
+  document.getElementById('nSellBtn').innerText = `🔴 BUY ${nAtm} PE - SL ${nAtm}`;
+
+  // SENSEX CHAIN - 100 step
+  let sAtm = buildChain(parseFloat(d.sensex), 100, 4, 'sensexChain');
+  document.getElementById('sHero').innerText = `${sAtm+400} CE @ ₹20 | ${sAtm-400} PE @ ₹22`;
+  document.getElementById('sGamma').innerText = `${sAtm} ATM cross - ${sAtm+200} blast!`;
+
+  // TELUGU GOLD BTC
+  document.getElementById('goldBtcTelugu').innerHTML = `
+  <b>🌍 GOLD International:</b> $${d.gold} (Live USA)<br>
+  <b>🇮🇳 GOLD National:</b> ₹${d.goldInr} /10g - Hyderabad lo idi rate! <br>
+  <b>💡 SIGNAL:</b> Gold ${parseFloat(d.gold)>2650?'perugutondi - CALL konandi':'taggutondi - PUT konandi'} - Strike ${Math.round(d.gold/10)*10+20} CE/PE<br><br>
+  <b>₿ BITCOIN International:</b> $${d.btcUsd}<br>
+  <b>🇮🇳 BITCOIN Telugu:</b> ₹${d.btcInr.toLocaleString('en-IN')} - Ante ${(d.btcInr/100000).toFixed(1)} Lakshalu! <br>
+  <b>💡 BTC SIGNAL:</b> Bitcoin ${d.btcUsd>80000?'80k paina undi - Inka peruguddi':'80k kinda undi - Konchem wait cheyandi'}<br>
+  `;
+
+ }catch(e){console.log(e)}
+}
+load(); setInterval(load,4000);
+</script></body></html>
