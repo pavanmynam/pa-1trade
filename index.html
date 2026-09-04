@@ -1,0 +1,72 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PA1 EPIC - ALL FEATURES</title>
+<style>body{background:#000;color:#fff;margin:0;font-family:system-ui;padding:8px}.top{background:#0f0;color:#000;padding:12px;text-align:center;font-weight:900;border-radius:14px;font-size:11px}.card{background:#111;border:1px solid #222;border-radius:14px;padding:12px;margin-top:10px}.big{font-size:22px;font-weight:900;color:#0f0}.row{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid #1e1e1e;font-size:13px}.atm{background:#0f0;color:#000;font-weight:900;border-radius:8px}.hero{background:linear-gradient(90deg,#ffeb00,#ff8c00);color:#000;font-weight:900;border-radius:8px}.btn{width:48%;padding:14px;border:0;border-radius:12px;font-weight:900;font-size:13px;margin-top:6px}.btnBuy{background:#0f0;color:#000}.btnSell{background:#f00;color:#fff;opacity:0.4}.sig{padding:10px;border-radius:12px;font-weight:900;text-align:center;margin-top:8px;font-size:12px}.call{background:#0f0;color:#000}.put{background:#f00;color:#fff}.chain{margin-top:10px;background:#0e0e0e;border:1px solid #222;border-radius:14px;padding:10px}.tag{font-size:10px;padding:4px 10px;border-radius:10px;font-weight:900;background:#0f0;color:#000}</style></head><body>
+<div class="top" id="top">🇮🇳 NIFTY 23940.85 | BANK 57589.05 | GOLD ₹123264 | BTC ₹76.2L | US UP = NIFTY GAP UP | CALL BIAS</div>
+
+<!-- NEW HOT TOPICS BOX - TELUGU - EDI KONALI VADDA -->
+<div class="card" style="border:2px solid #FFD700;background:linear-gradient(135deg,#1a1500,#2a2000)">
+<div style="font-weight:900;color:#FFD700;margin-bottom:8px;font-size:14px">🔥 HOT TOPICS + MARKET SUMMARY - TELUGU - EDI KONALI / EDI PERUGUTONDI</div>
+<div id="hotBox" style="background:#000;color:#FFD700;padding:14px;border-radius:12px;font-size:13px;font-weight:800;line-height:1.8;border:1px dashed #FFD700;white-space:pre-wrap">HOT TOPICS Loading...</div>
+<div id="marketBox" style="background:#001100;color:#0f0;padding:14px;border-radius:12px;font-size:13px;font-weight:800;line-height:1.8;margin-top:8px;border:1px dashed #0f0;white-space:pre-wrap">MARKET SUMMARY Loading...</div>
+</div>
+
+<!-- NIFTY 50 - SAME AS PIC -->
+<div class="card" style="border:1.5px solid #0f0">
+<div style="display:flex;justify-content:space-between"><b>📈 NIFTY 50 - <span id="nifty">--</span> LIVE</b><span class="tag" id="niftyTag">BUY</span></div>
+<div id="niftyTe" style="margin:6px 0;font-size:14px;color:#FFD700;font-weight:900"></div>
+<div style="display:flex;justify-content:space-between"><button class="btn btnBuy" id="nBuy">🟢 BUY 23950 CE</button><button class="btn btnSell" id="nSell">🔴 BUY 23950 PE</button></div>
+<div class="sig call" id="nSig">NIFTY SIGNAL: BUY | NIFTY 23941 CE KONANDI ANNA!</div>
+<div class="chain" style="border:0;padding:0;margin-top:8px"><div style="display:flex;justify-content:space-between;font-weight:900;color:#888;font-size:12px"><span>CALL</span><span>STRIKE</span><span>PUT</span></div><div id="nchain"></div><div style="font-size:11px;margin-top:6px">🎯 HERO: <span id="nhero"></span> | 💥 GAMMA: <span id="ngamma"></span></div></div>
+</div>
+
+<!-- SENSEX - SAME AS PIC -->
+<div class="card" style="border:1.5px solid #00f0ff">
+<div style="display:flex;justify-content:space-between"><b>📊 SENSEX - <span id="sensex">--</span></b><span class="tag" id="sensexTag" style="background:#00f0ff">BUY</span></div>
+<div id="sensexTe" style="margin:6px 0;font-size:14px;color:#00f0ff;font-weight:900"></div>
+<div style="display:flex;justify-content:space-between"><button class="btn btnBuy" id="sBuy" style="background:#00f0ff">🟢 SENSEX CALL BUY</button><button class="btn btnSell" id="sSell">🔴 SENSEX PUT BUY</button></div>
+<div id="schain" style="margin-top:8px"></div>
+</div>
+
+<!-- BANK + GOLD + BTC + SENSORS -->
+<div class="card" style="border:1.5px solid #ff00ff"><b>🏦 BANK NIFTY - <span id="bank">--</span></b><div style="display:flex;justify-content:space-between;margin-top:6px"><button class="btn btnBuy" id="bBuy">🟢 BANK CALL BUY</button><button class="btn btnSell" id="bSell">🔴 BANK PUT BUY</button></div><div id="bchain" style="margin-top:8px"></div></div>
+
+<div class="card" style="border:1.5px solid #FFD700"><b>🪙 GOLD - ₹<span id="ginr">--</span> /10g | $<span id="gold">--</span></b> <span class="tag" id="goldTag" style="background:#FFD700;color:#000">BUY</span><div id="goldTe" style="color:#FFD700;font-weight:800;margin:6px 0"></div><div style="display:flex;justify-content:space-between"><button class="btn btnBuy" id="gBuy" style="background:#FFD700;color:#000">🟢 GOLD BUY</button><button class="btn btnSell" id="gSell">🔴 GOLD SELL</button></div></div>
+
+<div class="card" style="border:1.5px solid #f7931a"><b>₿ BITCOIN - $<span id="btc">--</span> | ₹<span id="binrL">--</span>L</b> <span class="tag" id="btcTag" style="background:#f7931a">BUY</span><div id="btcTe" style="color:#f7931a;font-weight:800;margin:6px 0"></div><div style="display:flex;justify-content:space-between"><button class="btn btnBuy" id="btcBuy" style="background:#f7931a">🟢 BTC BUY</button><button class="btn btnSell" id="btcSell">🔴 BTC SELL</button></div></div>
+
+<div class="card" style="border:1.5px solid #0f0"><b>📦 TOP 10 SHARES - LIVE BUY/SELL + TOP PROFIT</b><div id="topHunt" style="background:#0f0;color:#000;padding:10px;border-radius:10px;font-weight:900;margin:8px 0;font-size:13px"></div><div id="topHuntTe" style="background:#FFD700;color:#000;padding:10px;border-radius:10px;font-weight:900;margin:8px 0;font-size:14px"></div><div id="slist"></div></div>
+
+<!-- 3 SENSORS TELUGU TEXT ONLY -->
+<div class="card" style="border:2px solid #0f0;background:#001100"><div style="font-weight:900;color:#0f0">💥 GAMMA BLAST SENSOR</div><div id="gammaSensor" style="background:#000;color:#0f0;padding:12px;border-radius:10px;font-size:13px;font-weight:800;margin-top:6px;border:1px dashed #0f0;white-space:pre-wrap"></div></div>
+<div class="card" style="border:2px solid #FFD700;background:#1a1500"><div style="font-weight:900;color:#FFD700">🎯 HERO TO ZERO SENSOR</div><div id="heroSensor" style="background:#000;color:#FFD700;padding:12px;border-radius:10px;font-size:13px;font-weight:800;margin-top:6px;border:1px dashed #FFD700;white-space:pre-wrap"></div></div>
+<div class="card" style="border:2px solid #00f0ff;background:#001a1a"><div style="font-weight:900;color:#00f0ff">🧠 TRADE HINT SENSOR - TELUGU</div><div id="tradeSensor" style="background:#000;color:#fff;padding:12px;border-radius:10px;font-size:13px;font-weight:800;margin-top:6px;border:1px dashed #00f0ff;white-space:pre-wrap"></div></div>
+
+<script>
+function makeChain(spot,step,el){
+ let atm=Math.round(spot/step)*step; let h=`<div style="display:flex;justify-content:space-between;font-weight:900;color:#888;font-size:12px;margin:4px 0"><span>CALL</span><span>STRIKE</span><span>PUT</span></div>`;
+ for(let i=-3;i<=3;i++){let s=atm+i*step; let isATM=i==0; let isHero=Math.abs(i)>=2; let cls=isATM?'atm':isHero?'hero':''; h+=`<div class="row ${cls}"><span>${isHero?'₹'+(130+i*-10)+' HERO ZERO':'₹'+(110-i*10)}${isATM?' ATM':''}</span><span><b>${s}</b></span><span>${isATM?'':'HERO ZERO '}₹${isATM?100:90+i*10}</span></div>`;}
+ document.getElementById(el).innerHTML=h; return atm;
+}
+async function load(){
+ let r=await fetch('/api/spot?t='+Date.now()); let d=await r.json();
+ document.getElementById('top').innerText=`🇮🇳 NIFTY ${d.nifty} | BANK ${d.bank} | GOLD ₹${d.goldInr} | BTC ₹${(d.btcInr/100000).toFixed(1)}L | ${d.hint}`;
+ document.getElementById('nifty').innerText=d.nifty; document.getElementById('bank').innerText=d.bank; document.getElementById('sensex').innerText=d.sensex;
+ document.getElementById('gold').innerText=d.gold; document.getElementById('ginr').innerText=d.goldInr; document.getElementById('btc').innerText=d.btcUsd; document.getElementById('binrL').innerText=(d.btcInr/100000).toFixed(1);
+ document.getElementById('niftyTe').innerText='🇮🇳 '+d.niftyActionTe; document.getElementById('sensexTe').innerText='🇮🇳 '+d.sensexActionTe;
+ document.getElementById('niftyTag').innerText=d.niftyAction; document.getElementById('sensexTag').innerText=d.sensexAction;
+ document.getElementById('nBuy').innerText=`🟢 BUY ${Math.round(d.nifty/50)*50} CE`; document.getElementById('nSell').innerText=`🔴 BUY ${Math.round(d.nifty/50)*50} PE`;
+ document.getElementById('nBuy').style.opacity=d.niftyAction=='BUY'?'1':'0.3'; document.getElementById('nSell').style.opacity=d.niftyAction=='SELL'?'1':'0.3';
+ document.getElementById('nSig').innerText=`NIFTY SIGNAL: ${d.niftyAction} | ${d.niftyActionTe}`; 
+ document.getElementById('hotBox').innerText=d.hotTopics; document.getElementById('marketBox').innerText=d.marketSummary;
+ document.getElementById('topHunt').innerText=d.topHunt; document.getElementById('topHuntTe').innerText=d.topHuntTe;
+ document.getElementById('goldTe').innerText=d.goldAction=='BUY'?`GOLD KONANDI ANNA! ₹${d.goldInr} PERUGUTONDI!`:`GOLD AMMAKANDI ANNA!`; document.getElementById('goldTag').innerText=d.goldAction;
+ document.getElementById('btcTe').innerText=d.btcAction=='BUY'?`BTC KONANDI ANNA! $${d.btcUsd} 80k PAINA!`:`BTC WAIT CHEYANDI ANNA!`; document.getElementById('btcTag').innerText=d.btcAction;
+ let nAtm=makeChain(parseFloat(d.nifty),50,'nchain'); makeChain(parseFloat(d.sensex),100,'schain'); makeChain(parseFloat(d.bank),100,'bchain');
+ document.getElementById('nhero').innerText=`${nAtm+200} CE ₹5 | ${nAtm-200} PE ₹5`; document.getElementById('ngamma').innerText=`${nAtm} break -> ${nAtm+100} BLAST`;
+ let sl=''; d.shares.forEach(s=>{let up=s.action=='BUY'; sl+=`<div class="card" style="padding:8px;margin-top:6px;background:${up?'#001a00':'#1a0000'}"><div style="display:flex;justify-content:space-between"><span><b>${s.name}</b> ₹${Number(s.price).toFixed(0)}<br><small style="color:${up?'#0f0':'#f44'}">${s.change}% ${s.actionTe}</small></span><span style="color:${up?'#0f0':'#f44'};font-weight:900">${up?'🟢 BUY':'🔴 SELL'}</span></div><div style="display:flex;justify-content:space-between"><button class="btn btnBuy" style="padding:8px;opacity:${up?'1':'0.3'}">BUY ${s.name}</button><button class="btn btnSell" style="padding:8px;opacity:${!up?'1':'0.3'}">SELL ${s.name}</button></div></div>`;}); document.getElementById('slist').innerHTML=sl;
+ let atm=Math.round(parseFloat(d.nifty)/50)*50;
+ document.getElementById('gammaSensor').innerText=`💥 GAMMA BLAST: NIFTY ${atm} BREAK AITHE ${atm+100} VELTHUNDI ANNA! ${atm} CE KONANDI! TARGET 80 PTS!`;
+ document.getElementById('heroSensor').innerText=`🎯 HERO TO ZERO: ${atm+200} CE @ ₹5 LO KONANDI - 10 RETLU! LOT 75 - ₹375 LO ₹3750!`;
+ document.getElementById('tradeSensor').innerText=`🧠 TRADE HINT: ${d.niftyActionTe} | ${d.sensexActionTe} | GOLD ${d.goldAction} | BTC ${d.btcAction} | TOP: ${d.topHuntTe}`;
+}
+load(); setInterval(load,5000);
+</script></body></html>
