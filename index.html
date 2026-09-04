@@ -1,0 +1,75 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PA1 FINAL</title>
+<style>
+body{background:#000;color:#fff;margin:0;font-family:system-ui;padding:8px}
+.top{background:#0f0;color:#000;padding:14px;text-align:center;font-weight:900;border-radius:14px;font-size:12px;line-height:1.4}
+.card{background:#111;border:2px solid #222;border-radius:18px;padding:12px;margin-top:12px}
+.btn{width:48%;padding:15px;border:0;border-radius:12px;font-weight:900;font-size:13px}
+.btnBuy{background:#0f0;color:#000}.btnSell{background:#330000;color:#666;border:1px solid #600}
+.row{display:flex;justify-content:space-between;padding:8px;border-bottom:1px solid #222;font-size:13px}
+.atm{background:#0f0;color:#000;font-weight:900;border-radius:8px}.hero{background:#ffcc00;color:#000;font-weight:900;border-radius:8px}
+.tag{float:right;font-size:10px;padding:5px 12px;border-radius:20px;font-weight:900;background:#0f0;color:#000}
+.sig{background:#0f0;color:#000;padding:12px;border-radius:12px;font-weight:900;text-align:center;margin-top:10px}
+.hot{border-color:#FFD700!important;background:#1a1500!important}
+.marketBox{background:#000;padding:14px;border-radius:12px;font-weight:800;line-height:1.7;white-space:pre-wrap;margin-top:8px}
+</style></head><body>
+<div class="top" id="top">🇮🇳 NIFTY 23940.85 | BANK 57589.05 | GOLD ₹123264 | BTC ₹76.2L | US UP = NIFTY GAP UP | CALL BIAS</div>
+
+<!-- HOT TOPICS - FIXED - TELUGU -->
+<div class="card hot">
+<div style="color:#FFD700;font-weight:900">🔥 HOT TOPICS + MARKET SUMMARY - TELUGU - EDI KONALI / EDI PERUGUTONDI</div>
+<div id="hotBox" class="marketBox" style="color:#FFD700;border:1.5px dashed #FFD700">🔥 HOT TOPICS TELUGU: NIFTY 23940 PERUGUTONDI - BULL MARKET! BANK 57589 STRONG! GOLD ₹123264 - 1.2 LAKH DAATI PERIGINDI! BTC ₹76.2L - 76L PAINA! TOP: RELIANCE +2.85% BREAKOUT!</div>
+<div id="marketBox" class="marketBox" style="color:#0f0;border:1.5px dashed #0f0">📈 MARKET ELA UNDI? MARKET BULLISH GA UNDI ANNA! EDI KONALI? NIFTY 23950 CE KONANDI! SENSEX CALL KONANDI! GOLD KONANDI PERUGUTONDI! EDI PERUGUTONDI? RELIANCE +2.85% PERIGINDI! EDI VADDA? PUT LU VADDU ANNA!</div>
+</div>
+
+<div class="card" style="border-color:#0f0">
+<div><b>📈 NIFTY 50 - <span id="nifty">23940.85</span> LIVE</b><span class="tag" id="nTag">BUY</span></div>
+<div id="nTe" style="color:#FFD700;font-weight:900;margin:8px 0;font-size:15px">🇮🇳 NIFTY 23941 CE KONANDI ANNA!</div>
+<div style="display:flex;justify-content:space-between"><button class="btn btnBuy" id="nBuy">🟢 BUY 23950 CE</button><button class="btn btnSell" id="nSell">🔴 BUY 23950 PE</button></div>
+<div class="sig" id="nSig">NIFTY SIGNAL: BUY | NIFTY 23941 CE KONANDI ANNA!</div>
+<div id="nchain" style="margin-top:10px"></div>
+<div style="font-size:11px;margin-top:8px;color:#888">🎯 HERO: <span id="nhero">24150 CE ₹5 | 23750 PE ₹5</span> | 💥 GAMMA: <span id="ngamma">23950 break -> BLAST</span></div>
+</div>
+
+<div class="card" style="border-color:#00f0ff">
+<div><b>📊 SENSEX - <span id="sensex">76716.29</span></b><span class="tag" style="background:#00f0ff">BUY</span></div>
+<div id="sTe" style="color:#00f0ff;font-weight:900;margin:8px 0">🇮🇳 SENSEX 76716 CE KONANDI!</div>
+<div style="display:flex;justify-content:space-between"><button class="btn btnBuy" style="background:#00f0ff">🟢 SENSEX CALL BUY</button><button class="btn btnSell">🔴 SENSEX PUT BUY</button></div>
+<div id="schain" style="margin-top:8px"></div>
+</div>
+
+<div class="card" style="border-color:#ff00ff"><b>🏦 BANK NIFTY - <span id="bank">57589.05</span></b><div style="display:flex;justify-content:space-between;margin-top:8px"><button class="btn btnBuy">🟢 BANK CALL BUY</button><button class="btn btnSell">🔴 BANK PUT BUY</button></div><div id="bchain" style="margin-top:8px"></div></div>
+
+<div class="card" style="border-color:#FFD700"><b>🪙 GOLD - ₹<span id="ginr">123264</span> /10g</b><span class="tag" style="background:#FFD700;color:#000">BUY</span><div id="gTe" style="color:#FFD700;font-weight:800;margin:8px 0">GOLD KONANDI ANNA! ₹123264 PERUGUTONDI!</div><div style="display:flex;justify-content:space-between"><button class="btn btnBuy" style="background:#FFD700;color:#000">🟢 GOLD BUY</button><button class="btn btnSell">🔴 GOLD SELL</button></div></div>
+
+<div class="card" style="border-color:#f7931a"><b>₿ BITCOIN - $<span id="btc">80863</span> | ₹<span id="binrL">76.2</span>L</b><div id="btcTe" style="color:#f7931a;font-weight:800;margin:8px 0">BTC KONANDI ANNA! $80863 80k PAINA!</div><div style="display:flex;justify-content:space-between"><button class="btn btnBuy" style="background:#f7931a">🟢 BTC BUY</button><button class="btn btnSell">🔴 BTC SELL</button></div></div>
+
+<div class="card" style="border-color:#0f0"><b>📦 SHARES + TOP PROFIT</b><div id="topHunt" style="background:#0f0;color:#000;padding:10px;border-radius:10px;font-weight:900;margin:8px 0">TOP PROFIT: RELIANCE @ ₹2850 | +2.85%</div><div id="slist"></div></div>
+
+<div class="card" style="border-color:#0f0;background:#001100"><b style="color:#0f0">💥 GAMMA BLAST SENSOR</b><div id="gSensor" class="marketBox" style="color:#0f0;border:1px dashed #0f0">💥 GAMMA BLAST: NIFTY 23950 BREAK AITHE 24050 VELTHUNDI ANNA! 23950 CE KONANDI! TARGET 80 PTS!</div></div>
+<div class="card" style="border-color:#FFD700;background:#1a1500"><b style="color:#FFD700">🎯 HERO TO ZERO SENSOR</b><div id="hSensor" class="marketBox" style="color:#FFD700;border:1px dashed #FFD700">🎯 HERO TO ZERO: 24150 CE @ ₹5 LO KONANDI - 10 RETLU! ₹375 LO ₹3750!</div></div>
+
+<script>
+function chain(spot,step,id){
+ let atm=Math.round(spot/step)*step; let h='<div style="display:flex;justify-content:space-between;color:#888;font-weight:900;font-size:11px;padding:6px"><span>CALL</span><span>STRIKE</span><span>PUT</span></div>';
+ for(let i=-3;i<=3;i++){let s=atm+i*step;let isATM=i==0;let isH=Math.abs(i)>=2;let cls=isATM?'atm':isH?'hero':'';h+=`<div class="row ${cls}"><span>₹${isH?5:100-Math.abs(i)*10} ${isH?'HERO ZERO':''} ${isATM?'ATM':''}</span><b>${s}</b><span>${isH?'HERO ZERO':''} ₹${isH?5:100-Math.abs(i)*10}</span></div>`;}
+ document.getElementById(id).innerHTML=h; return atm;
+}
+async function load(){
+ try{
+  let r=await fetch('/api/spot?t='+Date.now()); let d=await r.json();
+  document.getElementById('top').innerText=`🇮🇳 NIFTY ${d.nifty} | BANK ${d.bank} | GOLD ₹${d.goldInr} | BTC ₹${(d.btcInr/100000).toFixed(1)}L | ${d.hint}`;
+  document.getElementById('nifty').innerText=d.nifty; document.getElementById('bank').innerText=d.bank; document.getElementById('sensex').innerText=d.sensex; document.getElementById('ginr').innerText=d.goldInr; document.getElementById('btc').innerText=d.btcUsd; document.getElementById('binrL').innerText=(d.btcInr/100000).toFixed(1);
+  document.getElementById('nTe').innerText='🇮🇳 '+d.niftyActionTe; document.getElementById('sTe').innerText='🇮🇳 '+d.sensexActionTe;
+  document.getElementById('nBuy').innerText=`🟢 BUY ${Math.round(d.nifty/50)*50} CE`; document.getElementById('nSell').innerText=`🔴 BUY ${Math.round(d.nifty/50)*50} PE`;
+  document.getElementById('nSig').innerText=`NIFTY SIGNAL: ${d.niftyAction} | ${d.niftyActionTe}`;
+  document.getElementById('hotBox').innerText=d.hotTopics; document.getElementById('marketBox').innerText=d.marketSummary;
+  document.getElementById('topHunt').innerText=d.topHunt;
+  let atm=chain(parseFloat(d.nifty),50,'nchain'); chain(parseFloat(d.sensex),100,'schain'); chain(parseFloat(d.bank),100,'bchain');
+  document.getElementById('nhero').innerText=`${atm+200} CE ₹5 | ${atm-200} PE ₹5`; document.getElementById('ngamma').innerText=`${atm} break -> ${atm+100} BLAST`;
+  document.getElementById('gSensor').innerText=`💥 GAMMA BLAST: NIFTY ${atm} BREAK AITHE ${atm+100} VELTHUNDI ANNA! ${atm} CE KONANDI! TARGET 80 PTS! SL 30!`;
+  document.getElementById('hSensor').innerText=`🎯 HERO TO ZERO: ${atm+200} CE @ ₹5 LO KONANDI - 10 RETLU! LOT 75 - ₹375 LO ₹3750 PROFIT ANNA!`;
+  let sl=''; d.shares.forEach(s=>{sl+=`<div class="row"><span><b>${s.name}</b> ₹${s.price} <small style="color:#0f0">${s.change}%</small></span><span style="color:#0f0">🟢 ${s.action}</span></div>`}); document.getElementById('slist').innerHTML=sl;
+ }catch(e){ chain(23940.85,50,'nchain'); chain(76716.29,100,'schain'); chain(57589.05,100,'bchain'); }
+}
+load(); setInterval(load,5000);
+</script></body></html>
